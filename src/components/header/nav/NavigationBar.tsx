@@ -10,11 +10,12 @@ import {
   ChevronDown,
   User,
 } from "lucide-react";
-import SearchBar from "../common-components/SearchBar";
+import SearchBar from "../../common-components/SearchBar";
 
 const utilityLinks = [
   { name: "Plans & Pricing", href: "#plans" },
   { name: "Login", href: "#login" },
+  { name: "Sign Up", href: "#signup" },
 ];
 
 const TopNavBar = () => {
@@ -71,12 +72,13 @@ const TopNavBar = () => {
               </Link>
             </div> */}
 
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center  space-x-2">
               <button className="bg-lms-blue px-3 hover:cursor-pointer py-2 rounded-md text-white text-sm font-bold hover:bg-lms-blue-dark whitespace-nowrap ">
                 Buy Now
               </button>
               {/* <div className="w-8 h-8 flex items-center justify-center bg-black text-white font-bold rounded-full text-xs">
-                <User size={20} />
+                <User size=
+                {20} />
               </div> */}
             </div>
 
@@ -92,22 +94,19 @@ const TopNavBar = () => {
       </div>
 
       {isMenuOpen && (
-        <div>
-          <SearchBar />
-          <div className="lg:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t">
-            {[...utilityLinks, { name: "Categories", href: "#categories" }].map(
-              (item) => (
-                <Link
-                  key={item.name}
-                  href={item.href}
-                  onClick={() => setIsMenuOpen(false)}
-                  className="block px-3 py-2 rounded-md text-base font-medium text-lms-gray hover:bg-gray-50 hover:text-lms-blue transition-colors"
-                >
-                  {item.name}
-                </Link>
-              )
-            )}
-          </div>
+        <div className="lg:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t">
+          {[...utilityLinks, { name: "All Courses", href: "#categories" }].map(
+            (item) => (
+              <Link
+                key={item.name}
+                href={item.href}
+                onClick={() => setIsMenuOpen(false)}
+                className="block px-3 py-2 rounded-md text-base font-medium text-lms-gray hover:bg-gray-50 hover:text-lms-blue transition-colors"
+              >
+                {item.name}
+              </Link>
+            )
+          )}
         </div>
       )}
     </nav>
