@@ -1,14 +1,19 @@
 @import "tailwindcss";
 
 :root {
+  /* background-colors */
   --background: #ffffff;
   --foreground: #171717;
+  /* text-colors */
+  --lms-blue: oklch(54.749% 0.22118 265.472);
+  --lms-gray: oklch(37.3% 0.034 259.733);
 }
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
+  --color-lms-blue: var(--lms-blue);
+  --color-lms-gray: var(--lms-gray);
   --font-mono: var(--font-geist-mono);
 }
 
