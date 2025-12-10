@@ -65,7 +65,7 @@ const ReviewSection: React.FC = () => {
     if (firstCardRef.current) {
       return firstCardRef.current.clientWidth + GAP;
     }
-    return 316; // fallback width
+    return 316;
   };
 
   const scroll = (direction: "prev" | "next") => {
@@ -89,7 +89,6 @@ const ReviewSection: React.FC = () => {
     setActiveIndex(newIndex);
   };
 
-  // Update activeIndex on scroll
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -124,8 +123,6 @@ const ReviewSection: React.FC = () => {
           </div>
         ))}
       </div>
-
-      {/* Left Arrow */}
       <button
         onClick={() => scroll("prev")}
         disabled={activeIndex === 0}
@@ -133,8 +130,6 @@ const ReviewSection: React.FC = () => {
       >
         <ArrowLeft className="w-5 h-5 text-gray-700" />
       </button>
-
-      {/* Right Arrow */}
       <button
         onClick={() => scroll("next")}
         disabled={activeIndex >= reviewData.length - 1}

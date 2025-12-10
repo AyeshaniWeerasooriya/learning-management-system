@@ -23,13 +23,13 @@ const NewReleaseSection: React.FC = () => {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const firstCardRef = useRef<HTMLDivElement>(null);
   const [activeIndex, setActiveIndex] = useState(0);
-  const GAP = 16; // gap between cards
+  const GAP = 16;
 
   const getScrollDistance = () => {
     if (firstCardRef.current) {
       return firstCardRef.current.clientWidth + GAP;
     }
-    return 240 + GAP; // fallback width
+    return 240 + GAP;
   };
 
   const scroll = (direction: "prev" | "next") => {
@@ -53,7 +53,6 @@ const NewReleaseSection: React.FC = () => {
     }
   };
 
-  // Update activeIndex on scroll
   useEffect(() => {
     const container = scrollContainerRef.current;
     if (!container) return;
@@ -72,7 +71,6 @@ const NewReleaseSection: React.FC = () => {
     <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
       <h2 className="text-2xl font-bold text-white mb-6">New Releases</h2>
 
-      {/* Scrollable Cards */}
       <div
         ref={scrollContainerRef}
         className="flex space-x-4 overflow-x-scroll scrollbar-hide snap-x snap-mandatory"
@@ -87,8 +85,6 @@ const NewReleaseSection: React.FC = () => {
           </div>
         ))}
       </div>
-
-      {/* Left / Right Arrows */}
       <button
         onClick={() => scroll("prev")}
         disabled={activeIndex === 0}

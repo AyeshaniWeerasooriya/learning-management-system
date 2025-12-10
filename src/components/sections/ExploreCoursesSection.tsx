@@ -25,7 +25,6 @@ const ExploreCoursesSection: React.FC = () => {
   const handleLoadMore = () => {
     setVisibleCount((prev) => prev + 4);
 
-    // smooth scroll after loading
     setTimeout(() => {
       sectionRef.current?.scrollIntoView({
         behavior: "smooth",
@@ -46,8 +45,6 @@ const ExploreCoursesSection: React.FC = () => {
           <CourseCard key={course.id} />
         ))}
       </div>
-
-      {/* More Button */}
       {visibleCount < allCourses.length && (
         <div className="flex justify-center mt-10">
           <button

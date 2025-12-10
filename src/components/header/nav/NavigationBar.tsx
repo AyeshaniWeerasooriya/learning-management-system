@@ -1,25 +1,71 @@
 "use client";
-import React, { useState } from "react";
+
+import React, { useState, useRef, useEffect } from "react";
 import Link from "next/link";
-import {
-  ShoppingCart,
-  Heart,
-  Bell,
-  Menu,
-  X,
-  ChevronDown,
-  User,
-} from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import SearchBar from "../../common-components/SearchBar";
 
-const utilityLinks = [
+type UtilityLink = {
+  name: string;
+  href: string;
+};
+
+type MegaMenuItem = {
+  name: string;
+  href: string;
+  isViewAll?: boolean;
+};
+
+type MegaMenuContent = {
+  [key: string]: MegaMenuItem[];
+};
+
+const utilityLinks: UtilityLink[] = [
   { name: "Plans & Pricing", href: "#plans" },
   { name: "Login", href: "#login" },
   { name: "Sign Up", href: "#signup" },
 ];
 
-const TopNavBar = () => {
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+const megaMenuContent: MegaMenuContent = {
+  "Explore Courses": [
+    { name: "Artificial Intelligence", href: "/categories/ai" },
+    { name: "Business & Finance", href: "/categories/business" },
+    { name: "Computer Science", href: "/categories/cs" },
+    { name: "Data Science", href: "/categories/ds" },
+    // { name: "View All Categories", href: "/categories", isViewAll: true },
+  ],
+};
+
+const TopNavBar: React.FC = () => {
+  const [isMenuOpen, setIsMenuOpen] = useState<boolean>(false);
+  const [isMegaMenuOpen, setIsMegaMenuOpen] = useState<boolean>(false);
+
+  const megaMenuRef = useRef<HTMLDivElement | null>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        megaMenuRef.current &&
+        !megaMenuRef.current.contains(event.target as Node)
+      ) {
+        setIsMegaMenuOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, []);
+
+  const toggleMegaMenu = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    setIsMegaMenuOpen((prev) => !prev);
+  };
+
+  const handleMegaMenuLinkClick = () => {
+    setIsMegaMenuOpen(false);
+  };
 
   return (
     <nav className="bg-white border-b border-gray-200">
@@ -32,58 +78,90 @@ const TopNavBar = () => {
           </div>
 
           <div className="flex-grow flex justify-start">
-            <div className="flex">
-              <Link
-                href="#"
-                className="hidden lg:flex items-center gap-1 text-sm font-medium text-lms-gray hover:text-lms-blue transition-colors mr-6"
+            <div className="relative flex" ref={megaMenuRef}>
+              <button
+                onClick={toggleMegaMenu}
+                onMouseEnter={() => setIsMegaMenuOpen(true)}
+                onMouseLeave={() => {
+                  setTimeout(() => {
+                    if (
+                      megaMenuRef.current &&
+                      !megaMenuRef.current.matches(":hover")
+                    ) {
+                      setIsMegaMenuOpen(false);
+                    }
+                  }, 50);
+                }}
+                className={`hidden lg:flex items-center gap-1 text-sm font-medium transition-colors p-2 rounded-md -ml-2 mr-6 ${
+                  isMegaMenuOpen
+                    ? "text-blue-600 bg-gray-50"
+                    : "text-gray-600 hover:text-blue-600 hover:bg-gray-50"
+                }`}
+                aria-expanded={isMegaMenuOpen}
+                aria-haspopup="true"
               >
                 <span>Explore</span>
-                <ChevronDown className="w-4 h-4" />
-              </Link>
+                <ChevronDown
+                  className={`w-4 h-4 transition-transform ${
+                    isMegaMenuOpen ? "rotate-180" : ""
+                  }`}
+                />
+              </button>
+
+              {isMegaMenuOpen && (
+                <div
+                  className="absolute z-50 top-full mt-1 w-100 bg-white shadow-xl rounded-md  overflow-hidden"
+                  onMouseEnter={() => setIsMegaMenuOpen(true)}
+                  onMouseLeave={() => setIsMegaMenuOpen(false)}
+                >
+                  {Object.entries(megaMenuContent).map(([title, items]) => (
+                    <div key={title} className="p-4">
+                      <p className="text-xs font-bold uppercase tracking-wider text-gray-500 mb-2  pb-1">
+                        {title}
+                      </p>
+                      <div className="space-y-1">
+                        {items.map((item) => (
+                          <Link
+                            key={item.name}
+                            href={item.href}
+                            onClick={handleMegaMenuLinkClick}
+                            className={`block p-2 rounded-md transition-colors ${
+                              item.isViewAll
+                                ? "text-blue-600 font-bold hover:bg-blue-50"
+                                : "text-gray-700 hover:bg-gray-50 hover:text-blue-600"
+                            }`}
+                          >
+                            {item.name}
+                          </Link>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
+
             <SearchBar />
           </div>
-
           <div className="flex items-center space-x-4 ml-4">
             <div className="hidden lg:flex items-center space-x-4">
               {utilityLinks.map((item) => (
                 <Link
                   key={item.name}
                   href={item.href}
-                  className="text-sm font-medium text-lms-gray hover:text-lms-blue whitespace-nowrap"
+                  className="text-sm font-medium text-gray-600 hover:text-blue-600 whitespace-nowrap"
                 >
                   {item.name}
                 </Link>
               ))}
             </div>
-            {/* 
-            <div className="flex items-center space-x-4 border-l pl-4">
-              <Link href="#cart" aria-label="Shopping Cart">
-                <ShoppingCart
-                  size={20}
-                  className="text-lms-gray hover:text-lms-blue"
-                />
-              </Link>
-              <Link href="#notifications" aria-label="Notifications">
-                <Bell
-                  size={20}
-                  className="text-lms-gray hover:text-lms-blue"
-                />
-              </Link>
-            </div> */}
-
-            <div className="flex items-center  space-x-2">
-              <button className="bg-lms-blue px-3 hover:cursor-pointer py-2 rounded-md text-white text-sm font-bold hover:bg-lms-blue-dark whitespace-nowrap ">
+            <div className="flex items-center space-x-2">
+              <button className="bg-blue-600 px-3 py-2 rounded-md text-white text-sm font-bold hover:bg-blue-700 whitespace-nowrap">
                 Buy Now
               </button>
-              {/* <div className="w-8 h-8 flex items-center justify-center bg-black text-white font-bold rounded-full text-xs">
-                <User size=
-                {20} />
-              </div> */}
             </div>
-
             <button
-              className="lg:hidden p-2 text-lms-gray rounded-lg focus:outline-none"
+              className="lg:hidden p-2 text-gray-600 rounded-lg focus:outline-none"
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               aria-label="Toggle menu"
             >
@@ -92,7 +170,6 @@ const TopNavBar = () => {
           </div>
         </div>
       </div>
-
       {isMenuOpen && (
         <div className="lg:hidden px-2 pt-2 pb-3 space-y-1 sm:px-3 border-t">
           {[...utilityLinks, { name: "All Courses", href: "#categories" }].map(
@@ -101,7 +178,7 @@ const TopNavBar = () => {
                 key={item.name}
                 href={item.href}
                 onClick={() => setIsMenuOpen(false)}
-                className="block px-3 py-2 rounded-md text-base font-medium text-lms-gray hover:bg-gray-50 hover:text-lms-blue transition-colors"
+                className="block px-3 py-2 rounded-md text-base font-medium text-gray-600 hover:bg-gray-50 hover:text-blue-600 transition-colors"
               >
                 {item.name}
               </Link>

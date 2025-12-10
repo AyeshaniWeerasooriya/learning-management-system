@@ -12,14 +12,12 @@ import React from "react";
 
 function page() {
   return (
-    <div>
-      <NavigationBar />
+    <div className="">
       <HeroSection />
       <ExploreCoursesSection />
       <NewReleaseSection />
       <StartYourJourneyToday />
       <ReviewSection />
-      <Footer />
     </div>
   );
 }
