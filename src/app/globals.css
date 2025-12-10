@@ -1,31 +1,52 @@
 @import "tailwindcss";
 
+/* PROFESSIONAL COLOR PALETTE 
+  We use standard hex/hsl values for broader compatibility and define Tailwind-friendly variables.
+*/
 :root {
-  /* background-colors */
-  --background: #ffffff;
-  --foreground: #171717;
-  /* text-colors */
-  --lms-blue: oklch(54.749% 0.22118 265.472);
-  --lms-gray: oklch(37.3% 0.034 259.733);
+  /* Main Background & Text */
+  --background: #f9fafb; /* Light off-white (Gray-50) */
+  --foreground: #111827; /* Very dark gray (Gray-900) */
+
+  /* Primary Brand Color (Trustworthy Blue) */
+  --lms-blue: #2563eb; /* Blue-600 */
+  --lms-blue-dark: #1d4ed8; /* Blue-700 */
+
+  /* Neutral Text/Icon Color */
+  --lms-gray: #4b5563; /* Gray-600 */
 }
 
+/* Fallback for Next.js/Tailwind Theme */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
   --color-lms-blue: var(--lms-blue);
+  --color-lms-blue-dark: var(--lms-blue-dark);
   --color-lms-gray: var(--lms-gray);
-  --font-mono: var(--font-geist-mono);
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+    --background: #0f172a; /* Slate 900 */
+    --foreground: #e5e7eb; /* Light Gray */
   }
 }
 
+/* Base Font */
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  /* Use a modern, accessible system font stack */
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+}
+
+/* Utility to hide scrollbar while keeping scroll functionality */
+.scrollbar-hide {
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+}
+.scrollbar-hide::-webkit-scrollbar {
+  display: none; /* Chrome, Safari, Opera */
 }
