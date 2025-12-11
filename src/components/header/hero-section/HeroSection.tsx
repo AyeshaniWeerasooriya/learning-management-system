@@ -177,11 +177,12 @@ const HeroSection: React.FC = () => {
   }, [activeIndex]);
 
   return (
-    <div className="max-w-7xl mx-auto py-8 relative ">
-      <div className="relative">
-        <div
-          ref={scrollContainerRef}
-          className={`
+    <div className="w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+        <div className="relative">
+          <div
+            ref={scrollContainerRef}
+            className={`
             flex space-x-6 overflow-x-scroll snap-x snap-mandatory pb-4
             [scrollbar-width:none] [-ms-overflow-style:none]
             [&::-webkit-scrollbar]:hidden
@@ -189,45 +190,45 @@ const HeroSection: React.FC = () => {
             lg:ml-[-1rem] lg:mr-[-1rem]
 
           `}
-        >
-          {bannerData.map((banner, index) => (
-            <div
-              key={banner.id}
-              ref={index === 0 ? firstCardRef : null}
-              className={`snap-start flex-shrink-0 ${
-                index === 0 ? "first:ml-0 lg:first:ml-8" : ""
-              }`}
+          >
+            {bannerData.map((banner, index) => (
+              <div
+                key={banner.id}
+                ref={index === 0 ? firstCardRef : null}
+                className={`snap-start flex-shrink-0 ${
+                  index === 0 ? "first:ml-0 lg:first:ml-8" : ""
+                }`}
+              >
+                <BannerCard {...banner} />
+              </div>
+            ))}
+            <div className="flex-shrink-0 w-8 lg:w-4"></div>
+          </div>
+          <div className="absolute inset-y-0 w-full flex justify-between items-center px-4 sm:px-6 lg:px-8 pointer-events-none">
+            <button
+              onClick={() => scroll("prev")}
+              disabled={activeIndex === 0}
+              className="p-2 bg-white/70 backdrop-blur rounded-full shadow-lg pointer-events-auto disabled:opacity-50 transition-opacity lg:p-3 lg:shadow-xl lg:ml-[-1rem]"
+              aria-label="Previous Banner"
             >
-              <BannerCard {...banner} />
-            </div>
-          ))}
-          <div className="flex-shrink-0 w-8 lg:w-4"></div>
+              <ArrowLeft className="w-5 h-5 text-gray-700" />
+            </button>
+            <button
+              onClick={() => scroll("next")}
+              disabled={activeIndex === bannerData.length - 1}
+              className="p-2 bg-white/70 backdrop-blur rounded-full shadow-lg pointer-events-auto disabled:opacity-50 transition-opacity lg:p-3 lg:shadow-xl lg:mr-[-1rem]"
+              aria-label="Next Banner"
+            >
+              <ArrowRight className="w-5 h-5 text-gray-700" />
+            </button>
+          </div>
         </div>
-        <div className="absolute inset-y-0 w-full flex justify-between items-center px-4 sm:px-6 lg:px-8 pointer-events-none">
-          <button
-            onClick={() => scroll("prev")}
-            disabled={activeIndex === 0}
-            className="p-2 bg-white/70 backdrop-blur rounded-full shadow-lg pointer-events-auto disabled:opacity-50 transition-opacity lg:p-3 lg:shadow-xl lg:ml-[-1rem]"
-            aria-label="Previous Banner"
-          >
-            <ArrowLeft className="w-5 h-5 text-gray-700" />
-          </button>
-          <button
-            onClick={() => scroll("next")}
-            disabled={activeIndex === bannerData.length - 1}
-            className="p-2 bg-white/70 backdrop-blur rounded-full shadow-lg pointer-events-auto disabled:opacity-50 transition-opacity lg:p-3 lg:shadow-xl lg:mr-[-1rem]"
-            aria-label="Next Banner"
-          >
-            <ArrowRight className="w-5 h-5 text-gray-700" />
-          </button>
-        </div>
-      </div>
-      <div className="flex justify-start space-x-2 mt-4 pl-4 sm:pl-6 lg:pl-8 ">
-        {bannerData.map((_, index) => (
-          <div
-            key={index}
-            onClick={() => handleDotClick(index)}
-            className={`
+        <div className="flex justify-start space-x-2 mt-4 pl-4 sm:pl-6 lg:pl-8 ">
+          {bannerData.map((_, index) => (
+            <div
+              key={index}
+              onClick={() => handleDotClick(index)}
+              className={`
               h-2 rounded-full cursor-pointer
               transition-all duration-300
               ${
@@ -236,11 +237,12 @@ const HeroSection: React.FC = () => {
                   : "bg-gray-700 w-2 hover:bg-gray-400"
               }
             `}
-          />
-        ))}
-      </div>
-      <div className="flex items-center justify-center">
-        <TrustBadges />
+            />
+          ))}
+        </div>
+        <div className="flex items-center justify-center">
+          <TrustBadges />
+        </div>
       </div>
     </div>
   );

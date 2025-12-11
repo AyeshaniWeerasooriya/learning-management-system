@@ -1,10 +1,6 @@
 @import "tailwindcss";
 
-/* PROFESSIONAL COLOR PALETTE 
-  We use standard hex/hsl values for broader compatibility and define Tailwind-friendly variables.
-*/
 :root {
-  /* Main Background & Text */
   --background: #f9fafb; /* Light off-white (Gray-50) */
   --foreground: #111827; /* Very dark gray (Gray-900) */
 
@@ -16,7 +12,6 @@
   --lms-gray: #4b5563; /* Gray-600 */
 }
 
-/* Fallback for Next.js/Tailwind Theme */
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);

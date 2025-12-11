@@ -104,39 +104,41 @@ const ReviewSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
-      <h2 className="text-2xl font-bold text-gray-900 mb-6">
-        Why People Choose Us
-      </h2>
+    <section className="w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+        <h2 className="text-2xl font-bold text-gray-900 mb-6">
+          Why People Choose Us
+        </h2>
 
-      <div
-        ref={scrollContainerRef}
-        className="flex overflow-x-auto gap-4 scrollbar-hide"
-      >
-        {reviewData.map((review, index) => (
-          <div
-            key={index}
-            ref={index === 0 ? firstCardRef : null}
-            className="flex-shrink-0 snap-start"
-          >
-            <TestimonialCard {...review} />
-          </div>
-        ))}
+        <div
+          ref={scrollContainerRef}
+          className="flex overflow-x-auto gap-4 scrollbar-hide"
+        >
+          {reviewData.map((review, index) => (
+            <div
+              key={index}
+              ref={index === 0 ? firstCardRef : null}
+              className="flex-shrink-0 snap-start"
+            >
+              <TestimonialCard {...review} />
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={() => scroll("prev")}
+          disabled={activeIndex === 0}
+          className="absolute top-1/2 -left-3 transform -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow-lg disabled:opacity-50 hover:bg-white transition"
+        >
+          <ArrowLeft className="w-5 h-5 text-gray-700" />
+        </button>
+        <button
+          onClick={() => scroll("next")}
+          disabled={activeIndex >= reviewData.length - 1}
+          className="absolute top-1/2 -right-3 transform -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow-lg disabled:opacity-50 hover:bg-white transition"
+        >
+          <ArrowRight className="w-5 h-5 text-gray-700" />
+        </button>
       </div>
-      <button
-        onClick={() => scroll("prev")}
-        disabled={activeIndex === 0}
-        className="absolute top-1/2 -left-3 transform -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow-lg disabled:opacity-50 hover:bg-white transition"
-      >
-        <ArrowLeft className="w-5 h-5 text-gray-700" />
-      </button>
-      <button
-        onClick={() => scroll("next")}
-        disabled={activeIndex >= reviewData.length - 1}
-        className="absolute top-1/2 -right-3 transform -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow-lg disabled:opacity-50 hover:bg-white transition"
-      >
-        <ArrowRight className="w-5 h-5 text-gray-700" />
-      </button>
     </section>
   );
 };

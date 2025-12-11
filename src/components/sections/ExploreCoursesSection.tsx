@@ -34,28 +34,30 @@ const ExploreCoursesSection: React.FC = () => {
   };
 
   return (
-    <section
-      ref={sectionRef}
-      className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
-    >
-      <h2 className="text-2xl font-bold text-white mb-6">Explore Courses</h2>
+    <div className="w-full">
+      <section
+        ref={sectionRef}
+        className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12"
+      >
+        <h2 className="text-2xl font-bold text-white mb-6">Explore Courses</h2>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-        {allCourses.slice(0, visibleCount).map((course) => (
-          <CourseCard key={course.id} />
-        ))}
-      </div>
-      {visibleCount < allCourses.length && (
-        <div className="flex justify-center mt-10">
-          <button
-            onClick={handleLoadMore}
-            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition hover:cursor-pointer"
-          >
-            More Courses
-          </button>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+          {allCourses.slice(0, visibleCount).map((course) => (
+            <CourseCard key={course.id} />
+          ))}
         </div>
-      )}
-    </section>
+        {visibleCount < allCourses.length && (
+          <div className="flex justify-center mt-10">
+            <button
+              onClick={handleLoadMore}
+              className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow hover:bg-blue-700 transition hover:cursor-pointer"
+            >
+              More Courses
+            </button>
+          </div>
+        )}
+      </section>
+    </div>
   );
 };
 

@@ -68,39 +68,41 @@ const NewReleaseSection: React.FC = () => {
   }, []);
 
   return (
-    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
-      <h2 className="text-2xl font-bold text-white mb-6">New Releases</h2>
+    <div className="w-full">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
+        <h2 className="text-2xl font-bold text-white mb-6">New Releases</h2>
 
-      <div
-        ref={scrollContainerRef}
-        className="flex space-x-4 overflow-x-scroll scrollbar-hide snap-x snap-mandatory"
-      >
-        {newReleases.map((course, index) => (
-          <div
-            key={course.id}
-            ref={index === 0 ? firstCardRef : null}
-            className="snap-start flex-shrink-0"
-          >
-            <CourseCard />
-          </div>
-        ))}
-      </div>
-      <button
-        onClick={() => scroll("prev")}
-        disabled={activeIndex === 0}
-        className="absolute top-1/2 -left-3 transform -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow-lg disabled:opacity-50 transition-opacity hover:bg-white"
-      >
-        <ArrowLeft className="w-5 h-5 text-gray-700" />
-      </button>
+        <div
+          ref={scrollContainerRef}
+          className="flex space-x-4 overflow-x-scroll scrollbar-hide snap-x snap-mandatory"
+        >
+          {newReleases.map((course, index) => (
+            <div
+              key={course.id}
+              ref={index === 0 ? firstCardRef : null}
+              className="snap-start flex-shrink-0"
+            >
+              <CourseCard />
+            </div>
+          ))}
+        </div>
+        <button
+          onClick={() => scroll("prev")}
+          disabled={activeIndex === 0}
+          className="absolute top-1/2 -left-3 transform -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow-lg disabled:opacity-50 transition-opacity hover:bg-white"
+        >
+          <ArrowLeft className="w-5 h-5 text-gray-700" />
+        </button>
 
-      <button
-        onClick={() => scroll("next")}
-        disabled={activeIndex === newReleases.length - 1}
-        className="absolute top-1/2 -right-3 transform -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow-lg disabled:opacity-50 transition-opacity hover:bg-white"
-      >
-        <ArrowRight className="w-5 h-5 text-gray-700" />
-      </button>
-    </section>
+        <button
+          onClick={() => scroll("next")}
+          disabled={activeIndex === newReleases.length - 1}
+          className="absolute top-1/2 -right-3 transform -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow-lg disabled:opacity-50 transition-opacity hover:bg-white"
+        >
+          <ArrowRight className="w-5 h-5 text-gray-700" />
+        </button>
+      </section>
+    </div>
   );
 };
 
