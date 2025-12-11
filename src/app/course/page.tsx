@@ -4,18 +4,14 @@ import React, { useState } from "react";
 import {
   User,
   Star,
-  Film,
-  Clock,
-  BookOpen,
   ChevronDown,
   ChevronUp,
-  Tag,
-  ShoppingBag,
   PlayCircle,
-  Menu,
+  ShoppingBag,
   X,
 } from "lucide-react";
 import Breadcrumb from "@/components/common-components/Breadcrumb";
+import { cn } from "@/lib/utils";
 
 interface Module {
   id: number;
@@ -42,6 +38,7 @@ interface CourseData {
   modules: Module[];
 }
 
+// ---------- Mock Data ----------
 const mockCourseData: CourseData = {
   name: "Mastering Data Analysis with Microsoft Power BI",
   instructorName: "Sarah Chen",
@@ -110,7 +107,10 @@ const CourseModule: React.FC<{ module: Module }> = ({ module }) => {
   return (
     <div className="border border-gray-200 rounded-lg mb-2">
       <button
-        className="flex justify-between items-center w-full p-4 text-left font-semibold text-gray-800 hover:bg-gray-50 transition duration-150"
+        className={cn(
+          "flex justify-between items-center w-full p-4 text-left font-semibold transition duration-150",
+          isOpen ? "text-blue-600" : "text-gray-800 hover:bg-gray-50"
+        )}
         onClick={() => setIsOpen(!isOpen)}
       >
         <span>
@@ -139,6 +139,12 @@ const CourseModule: React.FC<{ module: Module }> = ({ module }) => {
   );
 };
 
+const SkillTag: React.FC<{ skill: string }> = ({ skill }) => (
+  <span className="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full mr-2 mb-2">
+    {skill}
+  </span>
+);
+
 const StickyBuyBox: React.FC<{ data: CourseData }> = ({ data }) => (
   <div className="lg:sticky lg:top-24 border border-gray-200 rounded-xl shadow-lg p-6 bg-white w-full">
     <div className="bg-gray-100 h-40 flex items-center justify-center rounded-lg mb-6">
@@ -152,11 +158,12 @@ const StickyBuyBox: React.FC<{ data: CourseData }> = ({ data }) => (
         </span>
       )}
       <span
-        className={`text-xl ${
+        className={cn(
           data.discountPrice
             ? "line-through text-gray-500"
-            : "font-bold text-gray-900"
-        }`}
+            : "font-bold text-gray-900",
+          "text-xl"
+        )}
       >
         ${data.price}
       </span>
@@ -167,7 +174,7 @@ const StickyBuyBox: React.FC<{ data: CourseData }> = ({ data }) => (
       Buy Now
     </button>
     <p className="text-center text-xs text-gray-500 mb-6">
-      Join 100+ Purchases
+      Join {data.purchases}+ Purchases
     </p>
 
     <div className="text-center text-sm text-gray-600 border-t border-gray-100 pt-4">
@@ -179,25 +186,11 @@ const StickyBuyBox: React.FC<{ data: CourseData }> = ({ data }) => (
   </div>
 );
 
+// ---------- Main Page ----------
+
 const CourseDetailsPage: React.FC = () => {
   const data = mockCourseData;
   const [showPromo, setShowPromo] = useState(true);
-
-  const SkillTag: React.FC<{ skill: string }> = ({ skill }) => (
-    <span className="inline-block bg-blue-100 text-blue-700 text-xs font-medium px-3 py-1 rounded-full mr-2 mb-2">
-      {skill}
-    </span>
-  );
-
-  const FeatureItem: React.FC<{ icon: React.ReactNode; text: string }> = ({
-    icon,
-    text,
-  }) => (
-    <div className="flex items-center text-sm text-gray-600 mb-2">
-      {icon}
-      <span className="ml-2">{text}</span>
-    </div>
-  );
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -230,6 +223,8 @@ const CourseDetailsPage: React.FC = () => {
                 {data.instructorName}
               </span>
             </p>
+
+            {/* Mobile Buy Box */}
             <div className="lg:hidden mb-6 p-4 border border-gray-200 rounded-xl bg-white shadow-sm">
               <div className="flex items-center justify-between">
                 <div>
@@ -240,11 +235,12 @@ const CourseDetailsPage: React.FC = () => {
                       </span>
                     )}
                     <span
-                      className={`text-lg ${
+                      className={cn(
                         data.discountPrice
                           ? "line-through text-gray-500"
-                          : "font-bold text-gray-900"
-                      }`}
+                          : "font-bold text-gray-900",
+                        "text-lg"
+                      )}
                     >
                       ${data.price}
                     </span>
@@ -258,7 +254,8 @@ const CourseDetailsPage: React.FC = () => {
                 </button>
               </div>
             </div>
-            What you ll learn
+
+            {/* What You Will Learn */}
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 What you ll learn
@@ -272,10 +269,11 @@ const CourseDetailsPage: React.FC = () => {
                 ))}
               </ul>
             </section>
-            Skills youll gain
+
+            {/* Skills */}
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
-                Skills you ll gain
+                Skills youll gain
               </h2>
               <div>
                 {data.skillsGained.map((skill, index) => (
@@ -283,6 +281,8 @@ const CourseDetailsPage: React.FC = () => {
                 ))}
               </div>
             </section>
+
+            {/* Modules */}
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Course Content
@@ -294,6 +294,8 @@ const CourseDetailsPage: React.FC = () => {
                 ))}
               </div>
             </section>
+
+            {/* Instructor Section */}
             <section className="mb-10 p-6 border border-gray-200 rounded-xl bg-white shadow-sm">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Instructor
@@ -316,12 +318,16 @@ const CourseDetailsPage: React.FC = () => {
                 intelligence and has trained over 5,000 students globally.
               </p>
             </section>
+
+            {/* Member Stories */}
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">
                 Member Stories
               </h2>
               <div className="bg-gray-200 h-40 rounded-xl flex items-center justify-center text-gray-600"></div>
             </section>
+
+            {/* Reviews */}
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">Reviews</h2>
               <div className="border border-gray-300 p-4 rounded-lg text-gray-600 flex justify-between items-center cursor-pointer">
@@ -329,6 +335,8 @@ const CourseDetailsPage: React.FC = () => {
                 <ChevronDown className="w-5 h-5" />
               </div>
             </section>
+
+            {/* FAQ */}
             <section className="mb-10">
               <h2 className="text-2xl font-bold text-gray-900 mb-4">FAQ</h2>
               <div className="border border-gray-300 p-4 rounded-lg text-gray-600 flex justify-between items-center cursor-pointer">
@@ -338,11 +346,13 @@ const CourseDetailsPage: React.FC = () => {
             </section>
           </div>
 
+          {/* Sticky Buy Box */}
           <div className="hidden lg:block lg:col-span-1">
             <StickyBuyBox data={data} />
           </div>
         </div>
 
+        {/* Mobile Bottom Buy Bar */}
         <div className="fixed bottom-0 left-0 right-0 lg:hidden bg-white border-t border-gray-200 shadow-2xl p-4 z-30">
           <div className="flex justify-between items-center">
             <div className="flex flex-col">
@@ -354,11 +364,12 @@ const CourseDetailsPage: React.FC = () => {
                   </span>
                 )}
                 <span
-                  className={`text-md ${
+                  className={cn(
                     data.discountPrice
                       ? "line-through text-gray-500"
-                      : "font-bold text-gray-900"
-                  }`}
+                      : "font-bold text-gray-900",
+                    "text-md"
+                  )}
                 >
                   ${data.price}
                 </span>

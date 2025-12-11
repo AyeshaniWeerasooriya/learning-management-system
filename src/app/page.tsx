@@ -10,10 +10,11 @@ import FAQSection from "@/components/sections/FAQSecction";
 import NewReleaseSection from "@/components/sections/NewReleaseSection";
 
 import React from "react";
+import { cn } from "@/lib/utils";
 
 function HomePage() {
   return (
-    <div className="max-w-full">
+    <div className={cn("max-w-full")}>
       <HeroSection />
       <ExploreCoursesSection />
       <NewReleaseSection />

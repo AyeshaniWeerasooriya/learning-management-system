@@ -123,23 +123,6 @@ const FAQSection: React.FC = () => {
             <ChevronDown className="w-4 h-4 inline ml-1 -mt-0.5" />
           </button>
         </div>
-
-        <style jsx global>{`
-          /* Minimal CSS for a simple fade-in effect on panel open */
-          @keyframes fadeIn {
-            from {
-              opacity: 0;
-              transform: translateY(-5px);
-            }
-            to {
-              opacity: 1;
-              transform: translateY(0);
-            }
-          }
-          .animate-fade-in {
-            animation: fadeIn 0.3s ease-out forwards;
-          }
-        `}</style>
       </div>
     </section>
   );

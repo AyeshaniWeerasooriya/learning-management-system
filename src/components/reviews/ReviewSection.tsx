@@ -2,6 +2,7 @@
 
 import React, { useRef, useState, useEffect } from "react";
 import { User, ArrowLeft, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Testimonial {
   name: string;
@@ -38,19 +39,28 @@ const reviewData: Testimonial[] = [
 
 const TestimonialCard: React.FC<Testimonial> = ({ name, review }) => (
   <div
-    className="w-[300px] sm:w-[350px] flex-shrink-0 p-6 bg-white 
-      border border-gray-100 rounded-xl shadow-lg 
-      transition-all duration-300 hover:shadow-xl hover:-translate-y-1"
+    className={cn(
+      "w-[300px] sm:w-[350px] flex-shrink-0 p-6 bg-white",
+      "border border-gray-100 rounded-xl shadow-lg transition-all duration-300",
+      "hover:shadow-xl hover:-translate-y-1"
+    )}
   >
     <div className="flex items-center mb-4">
-      <div className="w-10 h-10 bg-gray-200 rounded-full flex items-center justify-center text-gray-500">
+      <div
+        className={cn(
+          "w-10 h-10 rounded-full flex items-center justify-center",
+          "bg-gray-200 text-gray-500"
+        )}
+      >
         <User className="w-5 h-5" />
       </div>
+
       <div className="ml-3">
         <p className="font-semibold text-gray-900 text-sm">{name}</p>
         <p className="text-xs text-blue-600">Verified Learner</p>
       </div>
     </div>
+
     <p className="text-sm text-gray-600 italic">{review}</p>
   </div>
 );
@@ -75,11 +85,10 @@ const ReviewSection: React.FC = () => {
     const cardWidth = getCardWidth();
     let newIndex = activeIndex;
 
-    if (direction === "next") {
-      newIndex = Math.min(activeIndex + 1, reviewData.length - 1);
-    } else {
-      newIndex = Math.max(activeIndex - 1, 0);
-    }
+    newIndex =
+      direction === "next"
+        ? Math.min(activeIndex + 1, reviewData.length - 1)
+        : Math.max(activeIndex - 1, 0);
 
     container.scrollTo({
       left: newIndex * cardWidth,
@@ -110,9 +119,10 @@ const ReviewSection: React.FC = () => {
           Why People Choose Us
         </h2>
 
+        {/* Scroll Container */}
         <div
           ref={scrollContainerRef}
-          className="flex overflow-x-auto gap-4 scrollbar-hide"
+          className={cn("flex overflow-x-auto gap-4", "scrollbar-hide")}
         >
           {reviewData.map((review, index) => (
             <div
@@ -124,17 +134,29 @@ const ReviewSection: React.FC = () => {
             </div>
           ))}
         </div>
+
+        {/* Left Button */}
         <button
           onClick={() => scroll("prev")}
           disabled={activeIndex === 0}
-          className="absolute top-1/2 -left-3 transform -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow-lg disabled:opacity-50 hover:bg-white transition"
+          className={cn(
+            "absolute top-1/2 -left-3 -translate-y-1/2 p-2 rounded-full",
+            "bg-white/70 backdrop-blur shadow-lg hover:bg-white transition",
+            "disabled:opacity-50"
+          )}
         >
           <ArrowLeft className="w-5 h-5 text-gray-700" />
         </button>
+
+        {/* Right Button */}
         <button
           onClick={() => scroll("next")}
           disabled={activeIndex >= reviewData.length - 1}
-          className="absolute top-1/2 -right-3 transform -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow-lg disabled:opacity-50 hover:bg-white transition"
+          className={cn(
+            "absolute top-1/2 -right-3 -translate-y-1/2 p-2 rounded-full",
+            "bg-white/70 backdrop-blur shadow-lg hover:bg-white transition",
+            "disabled:opacity-50"
+          )}
         >
           <ArrowRight className="w-5 h-5 text-gray-700" />
         </button>

@@ -3,6 +3,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import CourseCard from "./../../components/common-components/CourseCard";
 import { ArrowLeft, ArrowRight } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 interface Course {
   id: number;
@@ -33,24 +34,24 @@ const NewReleaseSection: React.FC = () => {
   };
 
   const scroll = (direction: "prev" | "next") => {
-    if (scrollContainerRef.current) {
-      const container = scrollContainerRef.current;
-      const SCROLL_DISTANCE = getScrollDistance();
-      let newIndex = activeIndex;
+    if (!scrollContainerRef.current) return;
 
-      if (direction === "next") {
-        newIndex = Math.min(activeIndex + 1, newReleases.length - 1);
-      } else {
-        newIndex = Math.max(activeIndex - 1, 0);
-      }
+    const container = scrollContainerRef.current;
+    const SCROLL_DISTANCE = getScrollDistance();
+    let newIndex = activeIndex;
 
-      container.scrollTo({
-        left: newIndex * SCROLL_DISTANCE,
-        behavior: "smooth",
-      });
-
-      setActiveIndex(newIndex);
+    if (direction === "next") {
+      newIndex = Math.min(activeIndex + 1, newReleases.length - 1);
+    } else {
+      newIndex = Math.max(activeIndex - 1, 0);
     }
+
+    container.scrollTo({
+      left: newIndex * SCROLL_DISTANCE,
+      behavior: "smooth",
+    });
+
+    setActiveIndex(newIndex);
   };
 
   useEffect(() => {
@@ -68,28 +69,39 @@ const NewReleaseSection: React.FC = () => {
   }, []);
 
   return (
-    <div className="w-full">
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative">
-        <h2 className="text-2xl font-bold text-white mb-6">New Releases</h2>
+    <div className={cn("w-full")}>
+      <section
+        className={cn("max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 relative")}
+      >
+        <h2 className={cn("text-2xl font-bold mb-6 text-white")}>
+          New Releases
+        </h2>
 
         <div
           ref={scrollContainerRef}
-          className="flex space-x-4 overflow-x-scroll scrollbar-hide snap-x snap-mandatory"
+          className={cn(
+            "flex space-x-4 overflow-x-scroll scrollbar-hide snap-x snap-mandatory"
+          )}
         >
           {newReleases.map((course, index) => (
             <div
               key={course.id}
               ref={index === 0 ? firstCardRef : null}
-              className="snap-start flex-shrink-0"
+              className={cn("snap-start flex-shrink-0")}
             >
               <CourseCard />
             </div>
           ))}
         </div>
+
         <button
           onClick={() => scroll("prev")}
           disabled={activeIndex === 0}
-          className="absolute top-1/2 -left-3 transform -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow-lg disabled:opacity-50 transition-opacity hover:bg-white"
+          className={cn(
+            "absolute top-1/2 -left-3 transform -translate-y-1/2",
+            "bg-white/70 backdrop-blur rounded-full p-2 shadow-lg transition-opacity hover:bg-white",
+            "disabled:opacity-50"
+          )}
         >
           <ArrowLeft className="w-5 h-5 text-gray-700" />
         </button>
@@ -97,7 +109,11 @@ const NewReleaseSection: React.FC = () => {
         <button
           onClick={() => scroll("next")}
           disabled={activeIndex === newReleases.length - 1}
-          className="absolute top-1/2 -right-3 transform -translate-y-1/2 bg-white/70 backdrop-blur rounded-full p-2 shadow-lg disabled:opacity-50 transition-opacity hover:bg-white"
+          className={cn(
+            "absolute top-1/2 -right-3 transform -translate-y-1/2",
+            "bg-white/70 backdrop-blur rounded-full p-2 shadow-lg transition-opacity hover:bg-white",
+            "disabled:opacity-50"
+          )}
         >
           <ArrowRight className="w-5 h-5 text-gray-700" />
         </button>

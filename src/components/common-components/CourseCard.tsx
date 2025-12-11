@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { cn } from "@/lib/utils";
 
 interface CourseCardData {
   id: number;
@@ -35,11 +36,12 @@ const CourseCard: React.FC = () => {
 
   return (
     <div
-      className="w-full bg-white rounded-xl overflow-hidden 
-      shadow hover:shadow-lg transition-all duration-300 
-      border border-gray-100 flex flex-col cursor-pointer"
+      className={cn(
+        "w-full bg-white rounded-xl overflow-hidden shadow transition-all duration-300",
+        "border border-gray-100 flex flex-col cursor-pointer hover:shadow-lg"
+      )}
     >
-      <div className="relative w-full h-32">
+      <div className={cn("relative w-full h-32")}>
         <Image
           src={course.imageSrc}
           alt={course.title}
@@ -47,35 +49,39 @@ const CourseCard: React.FC = () => {
           className="object-cover"
         />
       </div>
-      <div className="p-3 flex-1 flex flex-col">
-        <h3 className="text-sm font-bold text-gray-900 mb-1 line-clamp-2">
+
+      <div className={cn("p-3 flex-1 flex flex-col")}>
+        <h3 className={cn("text-sm font-bold text-gray-900 mb-1 line-clamp-2")}>
           {course.title}
         </h3>
 
-        <p className="text-[11px] text-gray-500 mb-3 line-clamp-1">
+        <p className={cn("text-[11px] text-gray-500 mb-3 line-clamp-1")}>
           {course.author}
         </p>
-        <div className="flex items-center justify-between text-sm mb-3">
-          <span className="font-extrabold text-blue-600">
+
+        <div className={cn("flex items-center justify-between text-sm mb-3")}>
+          <span className={cn("font-extrabold text-blue-600")}>
             ${course.currentPrice.toFixed(2)}
           </span>
         </div>
 
-        <div className="mt-auto flex gap-2">
+        <div className={cn("mt-auto flex gap-2")}>
           <button
-            onClick={(e) => {
-              router.push("/course");
-            }}
-            className="flex-1 text-[11px] font-semibold border border-gray-300 text-gray-700 py-1.5 rounded-md hover:bg-gray-100 transition"
+            onClick={() => router.push("/course")}
+            className={cn(
+              "flex-1 text-[11px] font-semibold border border-gray-300 text-gray-700 py-1.5 rounded-md",
+              "hover:bg-gray-100 transition"
+            )}
           >
             View Course
           </button>
 
           <button
-            onClick={(e) => {
-              router.push("/checkout");
-            }}
-            className="flex-1 text-[11px] font-semibold bg-blue-600 text-white py-1.5 rounded-md hover:bg-blue-700 transition"
+            onClick={() => router.push("/checkout")}
+            className={cn(
+              "flex-1 text-[11px] font-semibold py-1.5 rounded-md",
+              "bg-blue-600 text-white hover:bg-blue-700 transition"
+            )}
           >
             Buy Now
           </button>
